@@ -1,0 +1,575 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+.hero-image {
+  animation: bgDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes bgDrift {
+  0% {
+    transform: scale(1.05) translateX(0px) translateY(0px);
+  }
+  100% {
+    transform: scale(1.12) translateX(-10px) translateY(-6px);
+  }
+}
+
+.fog {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.fog-1 {
+  background: radial-gradient(circle at 20% 60%, rgba(255,255,255,0.10), transparent 30%),
+              radial-gradient(circle at 70% 40%, rgba(255,255,255,0.08), transparent 28%),
+              radial-gradient(circle at 50% 80%, rgba(255,255,255,0.07), transparent 26%);
+  filter: blur(28px);
+  animation: fogMove1 18s ease-in-out infinite alternate;
+}
+
+.fog-2 {
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 24%),
+              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08), transparent 30%);
+  filter: blur(40px);
+  animation: fogMove2 24s ease-in-out infinite alternate;
+}
+
+@keyframes fogMove1 {
+  0% {
+    transform: translateX(-2%) translateY(0%);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(3%) translateY(-1.5%);
+    opacity: 0.7;
+  }
+}
+
+@keyframes fogMove2 {
+  0% {
+    transform: translateX(2%) translateY(1%);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(-3%) translateY(-2%);
+    opacity: 0.55;
+  }
+}
+
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 4;
+  filter: blur(40px);
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.glow-1 {
+  width: 140px;
+  height: 140px;
+  left: 25%;
+  top: 48%;
+  background: rgba(255, 180, 80, 0.16);
+}
+
+.glow-2 {
+  width: 120px;
+  height: 120px;
+  right: 23%;
+  top: 43%;
+  background: rgba(255, 180, 80, 0.14);
+  animation-delay: 1.5s;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.12);
+  }
+}
+
+.leaf {
+  position: absolute;
+  top: -10%;
+  z-index: 5;
+  font-size: 20px;
+  opacity: 0.75;
+  pointer-events: none;
+  animation: fallLeaf linear infinite;
+}
+
+.leaf-1 { animation-duration: 10s; }
+.leaf-2 { animation-duration: 12s; }
+.leaf-3 { animation-duration: 14s; }
+.leaf-4 { animation-duration: 11s; }
+.leaf-5 { animation-duration: 13s; }
+.leaf-6 { animation-duration: 15s; }
+.leaf-7 { animation-duration: 9s; }
+
+@keyframes fallLeaf {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(45vh) translateX(25px) rotate(120deg);
+  }
+  100% {
+    transform: translateY(110vh) translateX(-20px) rotate(260deg);
+    opacity: 0;
+  }
+}
+.hero-image {
+  animation: slowMove 8s ease-in-out infinite alternate;
+}
+
+@keyframes slowMove {
+  0% {
+    transform: scale(1.05) translateX(0px) translateY(0px);
+  }
+  100% {
+    transform: scale(1.12) translateX(-12px) translateY(-6px);
+  }
+}
+
+.fog {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.fog-1 {
+  background:
+    radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.18), transparent 30%),
+    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.14), transparent 28%);
+  filter: blur(35px);
+  animation: fogMove1 6s ease-in-out infinite alternate;
+}
+
+.fog-2 {
+  background:
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.14), transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.12), transparent 25%);
+  filter: blur(45px);
+  animation: fogMove2 7s ease-in-out infinite alternate;
+}
+
+@keyframes fogMove1 {
+  0% {
+    transform: translateX(-2%) translateY(0%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(4%) translateY(-2%);
+    opacity: 0.65;
+  }
+}
+
+@keyframes fogMove2 {
+  0% {
+    transform: translateX(2%) translateY(1%);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateX(-4%) translateY(-1%);
+    opacity: 0.55;
+  }
+}
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fadeDown 1.4s ease-out forwards;
+}
+
+.animate-fade-up {
+  animation: fadeUp 1.8s ease-out forwards;
+}
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent 35%, rgba(0, 0, 0, 0.35));
+  z-index: 5;
+}
+
+.leaf {
+  position: absolute;
+  top: -10%;
+  font-size: 28px;
+  animation-name: fallingLeaf;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  filter: blur(0.2px);
+}
+
+.leaf-1 {
+  left: 8%;
+  animation-duration: 15s;
+  animation-delay: 0s;
+}
+
+.leaf-2 {
+  left: 28%;
+  animation-duration: 19s;
+  animation-delay: 3s;
+}
+
+.leaf-3 {
+  left: 48%;
+  animation-duration: 17s;
+  animation-delay: 7s;
+}
+
+.leaf-4 {
+  left: 68%;
+  animation-duration: 21s;
+  animation-delay: 2s;
+}
+
+.leaf-5 {
+  left: 88%;
+  animation-duration: 18s;
+  animation-delay: 5s;
+}
+
+@keyframes fallingLeaf {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(55vh) translateX(45px) rotate(180deg);
+  }
+
+  100% {
+    transform: translateY(115vh) translateX(-35px) rotate(360deg);
+    opacity: 0;
+  }
+}
+html {
+  scroll-behavior: smooth;
+  background: #050706;
+}
+
+body {
+  margin: 0;
+  background: #050706;
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #fde7ad;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 100%;
+  height: 1px;
+  background: #fde7ad;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.hero-title {
+  text-shadow:
+    0 0 30px rgba(0, 0, 0, 0.8),
+    0 0 70px rgba(255, 207, 112, 0.12);
+}
+
+.gold-button {
+  color: #1b1306;
+  background: linear-gradient(
+    135deg,
+    #fff1b8 0%,
+    #d7a84b 50%,
+    #fff0ac 100%
+  );
+  box-shadow:
+    0 0 20px rgba(235, 186, 81, 0.3),
+    0 0 60px rgba(235, 186, 81, 0.12);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+.gold-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 30px rgba(255, 215, 122, 0.55),
+    0 0 80px rgba(255, 215, 122, 0.2);
+}
+
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 30%,
+      rgba(0, 0, 0, 0.35) 70%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+}
+
+.fog-layer {
+  position: absolute;
+  left: -25%;
+  width: 150%;
+  height: 45%;
+  pointer-events: none;
+  opacity: 0.2;
+  filter: blur(35px);
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(220, 230, 220, 0.55) 0%,
+      rgba(190, 205, 195, 0.2) 40%,
+      transparent 75%
+    );
+}
+
+.fog-layer-one {
+  bottom: 5%;
+  animation: fogMoveOne 18s ease-in-out infinite alternate;
+}
+
+.fog-layer-two {
+  bottom: 28%;
+  opacity: 0.12;
+  animation: fogMoveTwo 25s ease-in-out infinite alternate;
+}
+
+.fog-layer-three {
+  bottom: 15%;
+  opacity: 0.25;
+  animation: fogMoveThree 22s ease-in-out infinite alternate;
+}
+
+@keyframes fogMoveOne {
+  from {
+    transform: translateX(-8%) scale(1);
+  }
+
+  to {
+    transform: translateX(8%) scale(1.15);
+  }
+}
+
+@keyframes fogMoveTwo {
+  from {
+    transform: translateX(10%) scale(1.1);
+  }
+
+  to {
+    transform: translateX(-10%) scale(1);
+  }
+}
+
+@keyframes fogMoveThree {
+  from {
+    transform: translateX(-12%) translateY(10px);
+  }
+
+  to {
+    transform: translateX(12%) translateY(-15px);
+  }
+}
+
+.firefly {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #ffe08a;
+  box-shadow:
+    0 0 8px #ffd66b,
+    0 0 18px rgba(255, 214, 107, 0.8);
+  animation: fireflyMove 7s ease-in-out infinite;
+}
+
+@keyframes fireflyMove {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(25px, -30px) scale(1.2);
+  }
+
+  75% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-15px, -60px) scale(0.7);
+  }
+}
+
+.falling-leaf {
+  position: absolute;
+  top: -10%;
+  font-size: 22px;
+  opacity: 0;
+  animation-name: leafFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes leafFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+
+  10% {
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: translate3d(70px, 50vh, 0) rotate(220deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-40px, 115vh, 0) rotate(520deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .falling-leaf {
+    font-size: 17px;
+  }
+
+  .fog-layer {
+    opacity: 0.14;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-leaf,
+  .firefly,
+  .fog-layer,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
+.reveal-section {
+  opacity: 0;
+  transform: translateY(55px) scale(0.98);
+  filter: blur(8px);
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s ease,
+    filter 1.1s ease;
+}
+
+.reveal-section.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+.page-transition {
+  animation: pageFade 0.8s ease;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
