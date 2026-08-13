@@ -66,6 +66,7 @@ const accountTranslations = {
     completed: "прочитано",
     back: "Назад",
     loading: "Завантаження...",
+    menu: "Меню",
   },
   en: {
     account: "My account",
@@ -83,6 +84,7 @@ const accountTranslations = {
     completed: "completed",
     back: "Back",
     loading: "Loading...",
+    menu: "Menu",
   },
   es: {
     account: "Mi cuenta",
@@ -100,6 +102,7 @@ const accountTranslations = {
     completed: "completado",
     back: "Volver",
     loading: "Cargando...",
+    menu: "Menú",
   },
 };
 
@@ -120,11 +123,14 @@ export default function HomePage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
   const [accountSection, setAccountSection] =
     useState<AccountSection>(null);
-    const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+
   const [readingProgress, setReadingProgress] =
     useState<SavedReadingProgress | null>(null);
 
@@ -274,6 +280,10 @@ export default function HomePage() {
     router.refresh();
   };
 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <main className="relative overflow-hidden bg-[#050706] text-white">
       <audio ref={audioRef} src="/forest-sounds.mp3" loop />
@@ -281,7 +291,7 @@ export default function HomePage() {
       <nav className="fixed left-1/2 top-4 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between rounded-2xl border border-white/10 bg-black/35 px-4 py-3 shadow-2xl backdrop-blur-xl md:px-6">
         <Link
           href={"/" + lang}
-          className="whitespace-nowrap text-[10px] font-semibold tracking-[0.18em] text-white xl:text-sm xl:tracking-[0.25em]"
+          className="hidden whitespace-nowrap text-[10px] font-semibold tracking-[0.18em] text-white sm:block xl:text-sm xl:tracking-[0.25em]"
         >
           LEGEND OF LAKE SYNEVYR
         </Link>
@@ -299,7 +309,7 @@ export default function HomePage() {
           </Link>
 
           <Link
-          className="nav-link"
+            className="nav-link"
             href={"/" + lang + "/reading"}
           >
             {text.navChapters}
@@ -320,18 +330,86 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="flex shrink-0 items-center gap-3">
-          <div className="relative z-10 order-2">
-            <LanguageSelector />
+        <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:gap-3">
+          <div className="relative lg:hidden">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen((current) => !current);
+                setProfileOpen(false);
+              }}
+              aria-label={accountText.menu}
+              aria-expanded={mobileMenuOpen}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-amber-200/30 bg-black/40 text-xl text-amber-100 transition hover:border-amber-200/70 hover:bg-amber-200/10"
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
+
+            {mobileMenuOpen && (
+              <div className="absolute right-0 top-12 w-64 overflow-hidden rounded-2xl border border-white/15 bg-[#0d1712]/95 p-3 text-sm shadow-2xl backdrop-blur-xl">
+                <p className="px-4 pb-2 pt-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-amber-100/50">
+                  {accountText.menu}
+                </p>
+
+                <Link
+                  href={"/" + lang}
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+                >
+                  {text.navHome}
+                </Link>
+
+                <Link
+                  href={"/" + lang + "/reading/prologue"}
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+                >
+                  {text.navRead}
+                </Link>
+
+                <Link
+                  href={"/" + lang + "/reading"}
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+                >
+                  {text.navChapters}
+                </Link>
+
+                <Link
+                  href={"/" + lang + "/folklore"}
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+                >
+                  {text.navFolklore}
+                </Link>
+
+                <Link
+                  href={"/" + lang + "/author"}
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+                >
+                  {text.navAuthor}
+                </Link>
+
+                <Link
+                  href="/subscription"
+                  onClick={closeMobileMenu}
+                  className="mt-2 block rounded-xl border border-amber-200/20 bg-amber-200/10 px-4 py-3 font-semibold text-amber-100 transition hover:bg-amber-200/20"
+                >
+                  ✦ Synevyr+
+                </Link>
+              </div>
+            )}
           </div>
 
           {authChecked && (
-            <div className="relative z-20 order-1">
+            <div className="relative z-20">
               <button
                 type="button"
-                onClick={() =>
-                  setProfileOpen((current) => !current)
-                }
+                onClick={() => {
+                  setProfileOpen((current) => !current);
+                  setMobileMenuOpen(false);
+                }}
                 aria-label={accountText.account}
                 aria-expanded={profileOpen}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-amber-200/30 bg-black/40 text-lg text-amber-100 transition hover:border-amber-200/70 hover:bg-amber-200/10"
@@ -340,7 +418,7 @@ export default function HomePage() {
               </button>
 
               {profileOpen && (
-                <div className="absolute right-0 top-12 max-h-[75vh] w-80 overflow-y-auto rounded-2xl border border-white/15 bg-[#0d1712]/95 p-3 text-sm shadow-2xl backdrop-blur-xl">
+                <div className="absolute right-0 top-12 max-h-[75vh] w-[calc(100vw-2rem)] max-w-80 overflow-y-auto rounded-2xl border border-white/15 bg-[#0d1712]/95 p-3 text-sm shadow-2xl backdrop-blur-xl">
                   {loggedIn ? (
                     <>
                       <div className="border-b border-white/10 px-3 pb-3 pt-2">
@@ -564,6 +642,7 @@ export default function HomePage() {
                           {soundOn ? "🔊" : "🔇"}{" "}
                           {accountText.forestSounds}
                         </span>
+
                         <span className="text-xs text-amber-100/70">
                           {soundOn
                             ? accountText.soundOn
@@ -576,6 +655,10 @@ export default function HomePage() {
               )}
             </div>
           )}
+
+          <div className="relative z-10">
+            <LanguageSelector />
+          </div>
         </div>
       </nav>
 
@@ -679,7 +762,7 @@ export default function HomePage() {
 
         <div className="relative z-20 mx-auto max-w-4xl px-6 text-center">
           <p className="mb-5 text-xs uppercase tracking-[0.5em] text-amber-100/70 md:text-sm">
-          {text.sectionTwoLabel}
+            {text.sectionTwoLabel}
           </p>
 
           <h2 className="mb-7 text-4xl font-bold md:text-7xl">
