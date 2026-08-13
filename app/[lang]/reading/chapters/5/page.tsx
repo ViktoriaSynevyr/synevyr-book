@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import BookChapter from "../../../../components/BookChapter";
-import chapter5 from "../../../../translations/chapter5";
+import { chapter5 } from "../../../../translations/chapter5";
 
 export default function Chapter5Page() {
   const params = useParams<{ lang: string }>();
@@ -24,7 +24,7 @@ export default function Chapter5Page() {
         path={`/${lang}/reading/chapters/5`}
       >
         <div className="space-y-7">
-          {chapter.content.map((paragraph, index) => (
+          {chapter.content.map((paragraph: string, index: number) => (
             <p key={index} className="whitespace-pre-line">
               {paragraph}
             </p>
