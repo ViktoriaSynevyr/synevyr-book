@@ -238,28 +238,43 @@ const audioPath =
   }
 
   return (
-    <>
-      <ReadingProgress
-        title={title}
-        path={path}
-        chapterNumber={chapterNumber}
-      />
+  <>
+    <ReadingProgress
+      title={title}
+      path={path}
+      chapterNumber={chapterNumber}
+    />
 
-      <ReadingToolbar
-        chapterNumber={chapterNumber}
-        title={title}
-        path={path}
-        fontSize={fontSize}
-        audioSrc={audioSrc}
-        onFontSizeChange={setFontSize}
-      />
+    <ReadingToolbar
+      chapterNumber={chapterNumber}
+      title={title}
+      path={path}
+      fontSize={fontSize}
+      audioSrc={audioSrc}
+      onFontSizeChange={setFontSize}
+    />
 
-      <BookPage
-        title={title}
-        fontSize={fontSize}
-      >
-        {children}
-      </BookPage>
-    </>
-  );
+    <BookPage
+      title={title}
+      fontSize={fontSize}
+    >
+      {children}
+
+      {chapterNumber === 0 && (
+        <div className="mt-16 flex justify-end">
+          <Link
+            href={"/" + lang + "/reading/chapters/1"}
+            className="rounded-2xl border border-amber-200/30 bg-amber-200/10 px-6 py-4 font-semibold text-amber-100 transition hover:border-amber-200/60 hover:bg-amber-200/20"
+          >
+            {lang === "uk"
+              ? "Розділ 1 →"
+              : lang === "es"
+              ? "Capítulo 1 →"
+              : "Chapter 1 →"}
+          </Link>
+        </div>
+      )}
+    </BookPage>
+  </>
+);
 }
