@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Lang = "uk" | "en" | "es";
 
@@ -35,6 +36,9 @@ const seo = {
   }
 >;
 
+function isSupportedLang(value: string): value is Lang {
+  return ["uk", "en", "es"].includes(value as Lang);
+}
 export async function generateMetadata({
   params,
 }: {
@@ -42,13 +46,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang: rawLang } = await params;
 
-  const lang: Lang =
-    rawLang === "uk" ||
-    rawLang === "es"
-      ? rawLang
-      : "en";
+  if (!isSupportedLang(rawLang)) {
+    return {};
+  }
 
-  const currentSeo = seo[lang];
+  const currentSeo = seo[rawLang];
 
   return {
     title: currentSeo.title,
@@ -66,9 +68,9 @@ export async function generateMetadata({
       title: currentSeo.title,
       description: currentSeo.description,
       locale:
-        lang === "uk"
+        rawLang === "uk"
           ? "uk_UA"
-          : lang === "es"
+          : rawLang === "es"
           ? "es_ES"
           : "en_US",
     },
@@ -80,8 +82,15 @@ export async function generateMetadata({
   };
 }
 
-export default function LangLayout({
+export default async function LangLayout({
   children,
+  params,
 }: LangLayoutProps) {
+  const { lang } = await params;
+
+  if (!isSupportedLang(lang)) {
+    notFound();
+  }
+
   return <>{children}</>;
 }
