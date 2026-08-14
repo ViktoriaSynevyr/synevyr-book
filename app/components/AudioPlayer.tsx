@@ -198,122 +198,156 @@ export default function AudioPlayer({
       />
 
       <button
-  type="button"
-  onClick={() =>
-    setIsOpen((previous) => !previous)
-  }
-  className={
-    isOpen || isPlaying
-      ? "grid h-11 w-11 min-h-11 min-w-11 place-items-center rounded-full border border-amber-200/60 bg-amber-200/15 text-xl text-amber-100 shadow-lg transition hover:bg-amber-200/25"
-      : "grid h-11 w-11 min-h-11 min-w-11 place-items-center rounded-full border border-white/20 bg-white/5 text-xl text-white/70 shadow-lg transition hover:border-amber-200/50 hover:bg-amber-200/10 hover:text-amber-100"
-  }
-  aria-label="Audiobook"
-  title="Audiobook"
->
-  ♫
-</button>
+        type="button"
+        onClick={() =>
+          setIsOpen((previous) => !previous)
+        }
+        className={
+          isOpen || isPlaying
+            ? "grid h-11 w-11 min-h-11 min-w-11 place-items-center rounded-full border border-amber-200/60 bg-amber-200/15 text-xl text-amber-100 shadow-lg transition hover:bg-amber-200/25"
+            : "grid h-11 w-11 min-h-11 min-w-11 place-items-center rounded-full border border-white/20 bg-white/5 text-xl text-white/70 shadow-lg transition hover:border-amber-200/50 hover:bg-amber-200/10 hover:text-amber-100"
+        }
+        aria-label="Audiobook"
+        title="Audiobook"
+      >
+        ♫
+      </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-12 z-50 w-[280px] rounded-2xl border border-amber-100/20 bg-[#11110f]/95 p-4 shadow-2xl backdrop-blur-xl">
-          <div className="mb-4 flex items-center justify-between">
-            <p className="text-xs uppercase tracking-[0.2em] text-amber-100/60">
-              Audiobook
-            </p>
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/20 sm:hidden"
+            onClick={() => setIsOpen(false)}
+          />
 
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="text-lg text-white/50 transition hover:text-white"
-              aria-label="Close audiobook player"
-            >
-              ×
-            </button>
-          </div>
+          <div
+            className="
+              fixed
+              left-1/2
+              top-1/2
+              z-50
+              w-[calc(100vw-2rem)]
+              max-w-[320px]
+              -translate-x-1/2
+              -translate-y-1/2
+              rounded-2xl
+              border
+              border-amber-100/20
+              bg-[#11110f]/95
+              p-4
+              shadow-2xl
+              backdrop-blur-xl
 
-          <div className="flex items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => skip(-10)}
-              className="rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/10"
-            >
-              −10
-            </button>
+              sm:absolute
+              sm:left-auto
+              sm:right-0
+              sm:top-12
+              sm:w-[280px]
+              sm:max-w-none
+              sm:translate-x-0
+              sm:translate-y-0
+            "
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-xs uppercase tracking-[0.2em] text-amber-100/60">
+                Audiobook
+              </p>
 
-            <button
-              type="button"
-              onClick={togglePlay}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-lg text-[#181610] transition hover:scale-105"
-              aria-label={
-                isPlaying ? "Pause" : "Play"
-              }
-            >
-              {isPlaying ? "❚❚" : "▶"}
-            </button>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="text-lg text-white/50 transition hover:text-white"
+                aria-label="Close audiobook player"
+              >
+                ×
+              </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => skip(10)}
-              className="rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/10"
-            >
-              +10
-            </button>
-          </div>
+            <div className="flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => skip(-10)}
+                className="rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/10"
+              >
+                −10
+              </button>
 
-          <div className="mt-4">
-            <input
-              type="range"
-              min={0}
-              max={duration || 0}
-              step={0.1}
-              value={Math.min(
-                currentTime,
-                duration || 0
-              )}
-              onChange={handleSeek}
-              className="w-full cursor-pointer"
-              aria-label="Audio progress"
-            />
+              <button
+                type="button"
+                onClick={togglePlay}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-lg text-[#181610] transition hover:scale-105"
+                aria-label={
+                  isPlaying ? "Pause" : "Play"
+                }
+              >
+                {isPlaying ? "❚❚" : "▶"}
+              </button>
 
-            <div className="mt-1 flex justify-between text-[11px] text-white/40">
-              <span>
-                {formatTime(currentTime)}
-              </span>
+              <button
+                type="button"
+                onClick={() => skip(10)}
+                className="rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/10"
+              >
+                +10
+              </button>
+            </div>
 
-              <span>
-                {formatTime(duration)}
-              </span>
+            <div className="mt-4">
+              <input
+                type="range"
+                min={0}
+                max={duration || 0}
+                step={0.1}
+                value={Math.min(
+                  currentTime,
+                  duration || 0
+                )}
+                onChange={handleSeek}
+                className="w-full cursor-pointer"
+                aria-label="Audio progress"
+              />
+
+              <div className="mt-1 flex justify-between text-[11px] text-white/40">
+                <span>
+                  {formatTime(currentTime)}
+                </span>
+
+                <span>
+                  {formatTime(duration)}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-3 flex justify-end">
+              <select
+                value={playbackRate}
+                onChange={changePlaybackRate}
+                className="rounded-lg border border-white/10 bg-black/40 px-2 py-1 text-xs text-white"
+                aria-label="Playback speed"
+              >
+                <option value={0.75}>
+                  0.75×
+                </option>
+
+                <option value={1}>
+                  1×
+                </option>
+
+                <option value={1.25}>
+                  1.25×
+                </option>
+
+                <option value={1.5}>
+                  1.5×
+                </option>
+
+                <option value={2}>
+                  2×
+                </option>
+              </select>
             </div>
           </div>
-
-          <div className="mt-3 flex justify-end">
-            <select
-              value={playbackRate}
-              onChange={changePlaybackRate}
-              className="rounded-lg border border-white/10 bg-black/40 px-2 py-1 text-xs text-white"
-              aria-label="Playback speed"
-            >
-              <option value={0.75}>
-                0.75×
-              </option>
-
-              <option value={1}>
-                1×
-              </option>
-
-              <option value={1.25}>
-                1.25×
-              </option>
-
-              <option value={1.5}>
-                1.5×
-              </option>
-
-              <option value={2}>
-                2×
-              </option>
-            </select>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
