@@ -117,7 +117,12 @@ export default function HomePage() {
 
   const text = homeTranslations[lang];
   const accountText = accountTranslations[lang];
-
+const mapLabel =
+  lang === "uk"
+    ? "Карта"
+    : lang === "es"
+      ? "Mapa"
+      : "Map";
   const [scrollY, setScrollY] = useState(0);
   const [soundOn, setSoundOn] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -321,7 +326,12 @@ export default function HomePage() {
           >
             {text.navFolklore}
           </Link>
-
+<Link
+  className="nav-link"
+  href={"/" + lang + "/map"}
+>
+  {mapLabel}
+</Link>
           <Link
             className="nav-link"
             href={"/" + lang + "/author"}
@@ -382,7 +392,13 @@ export default function HomePage() {
                 >
                   {text.navFolklore}
                 </Link>
-
+<Link
+  href={"/" + lang + "/map"}
+  onClick={closeMobileMenu}
+  className="block rounded-xl px-4 py-3 text-white/80 transition hover:bg-white/10 hover:text-amber-100"
+>
+  {mapLabel}
+</Link>
                 <Link
                   href={"/" + lang + "/author"}
                   onClick={closeMobileMenu}
